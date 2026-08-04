@@ -29,10 +29,13 @@
       [data-m~="page-t"] { font-size: 28px !important; }
       [data-m~="sec-t"] { font-size: 22px !important; }
       [data-m~="hero-pad"] { padding-top: 56px !important; padding-bottom: 52px !important; }
-      [data-m~="navbar"] { height: auto !important; flex-wrap: wrap !important; padding-top: 12px !important; padding-bottom: 12px !important; gap: 12px !important; }
-      [data-m~="navlist"] { margin-left: 0 !important; width: 100% !important; order: 3; overflow-x: auto; gap: 20px !important; }
-      [data-m~="navlist"] button { padding: 6px 2px 8px !important; font-size: 14px !important; white-space: nowrap; }
-      [data-m~="cta"] { margin-left: auto !important; }
+      [data-m~="navlist"] { display: none !important; }
+      [data-m~="burger"] { display: flex !important; }
+      [data-m~="cta"] { margin-left: auto !important; padding: 9px 14px !important; font-size: 13px !important; }
+      [data-m~="ev-card"] { flex-direction: column !important; align-items: stretch !important; gap: 14px !important; }
+      [data-m~="ev-date"] { width: auto !important; align-self: flex-start; display: flex !important; align-items: baseline; gap: 7px; padding: 7px 12px !important; text-align: left !important; }
+      [data-m~="ev-reg"] { width: 100%; }
+      [data-m~="wrap"] { flex-wrap: wrap !important; }
     }
     @media (max-width: 560px) {
       [data-m~="cols2"] { grid-template-columns: 1fr !important; }
@@ -50,7 +53,15 @@
       </sc-for>
     </div>
     <button onClick="{{ goAbout }}" data-m="cta" style="background: #00629B; color: #FFFFFF; border: none; border-radius: 4px; padding: 10px 18px; font-size: 14px; font-weight: 700; cursor: pointer;" style-hover="background: #014C77;">Join AESS</button>
+    <button onClick="{{ toggleMenu }}" data-m="burger" aria-label="Menu" style="display: none; background: #FFFFFF; border: 1px solid #D9E2E8; border-radius: 6px; width: 42px; height: 42px; align-items: center; justify-content: center; font-size: 19px; color: #041C2C; cursor: pointer; flex: none; padding: 0;">{{ menuIcon }}</button>
   </div>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="border-top: 1px solid #D9E2E8; background: #FFFFFF; display: flex; flex-direction: column; padding: 8px 18px 14px;">
+      <sc-for list="{{ navItems }}" as="nav" hint-placeholder-count="5">
+        <button onClick="{{ nav.onClick }}" style="text-align: left; background: none; border: none; border-left: 3px solid {{ nav.bar }}; color: {{ nav.color }}; padding: 14px 14px; font-size: 16px; font-weight: {{ nav.weight }}; cursor: pointer;">{{ nav.label }}</button>
+      </sc-for>
+    </div>
+  </sc-if>
 </div>
 
 <!-- ============ HOME ============ -->
@@ -134,7 +145,7 @@
 
   <!-- Announcement strip -->
   <div style="background: #E8F1F8; border-top: 1px solid #D9E2E8; border-bottom: 1px solid #D9E2E8;">
-    <div data-m="pad" style="max-width: 1140px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; gap: 14px;">
+    <div data-m="pad wrap" style="max-width: 1140px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; gap: 14px;">
       <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.1em; color: #FFFFFF; background: #00629B; border-radius: 3px; padding: 4px 8px;">NEW</div>
       <div style="font-size: 14px; font-weight: 600; color: #1A2A33;">{{ latestAnnouncement }}</div>
       <button onClick="{{ goAnnouncements }}" style="margin-left: auto; background: none; border: none; color: #00629B; font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap;" style-hover="color: #014C77;">All announcements →</button>
@@ -305,7 +316,7 @@
           <div style="display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; color: #041C2C; background: #FFC845; border-radius: 3px; padding: 5px 10px; margin-bottom: 18px;">FLAGSHIP · REGISTRATION OPEN</div>
           <h2 style="font-size: 34px; font-weight: 800; margin: 0 0 12px;">AeroHack '26</h2>
           <p style="font-size: 15px; line-height: 1.65; color: #B8C9D4; margin: 0 0 22px; max-width: 420px;">Our 48-hour aerospace systems hackathon. Build for tracks in UAS autonomy, radar sensing, and satellite ground systems — with mentors from industry.</p>
-          <div style="display: flex; gap: 22px; margin-bottom: 26px; font-size: 14px; font-weight: 600; color: #E8F1F8;">
+          <div style="display: flex; flex-wrap: wrap; gap: 12px 22px; margin-bottom: 26px; font-size: 14px; font-weight: 600; color: #E8F1F8;">
             <div>Aug 21–23, 2026</div>
             <div>Dome Building, MUJ</div>
             <div>Teams of 2–4</div>
@@ -321,14 +332,14 @@
     <!-- Event list -->
     <div style="display: flex; flex-direction: column; gap: 16px;">
       <sc-for list="{{ visibleEvents }}" as="ev" hint-placeholder-count="4">
-        <div style="border: 1px solid #D9E2E8; border-radius: 8px; padding: 22px 24px; display: flex; gap: 22px; align-items: center; background: #FFFFFF;" style-hover="border-color: #00629B; box-shadow: 0 8px 24px rgba(4,28,44,0.07);">
-          <div style="width: 68px; flex: none; background: #E8F1F8; border-radius: 6px; padding: 10px 4px; text-align: center;">
+        <div data-m="ev-card" style="border: 1px solid #D9E2E8; border-radius: 8px; padding: 22px 24px; display: flex; flex-wrap: wrap; gap: 22px; align-items: center; background: #FFFFFF;" style-hover="border-color: #00629B; box-shadow: 0 8px 24px rgba(4,28,44,0.07);">
+          <div data-m="ev-date" style="width: 68px; flex: none; background: #E8F1F8; border-radius: 6px; padding: 10px 4px; text-align: center;">
             <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; color: #00629B;">{{ ev.month }}</div>
             <div style="font-size: 20px; font-weight: 800; color: #041C2C; line-height: 1.2;">{{ ev.day }}</div>
             <div style="font-size: 11px; font-weight: 600; color: #5B6B76;">{{ ev.year }}</div>
           </div>
           <div style="flex: 1; min-width: 0;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 6px;">
               <div style="font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: {{ ev.catBg }}; color: {{ ev.catFg }};">{{ ev.cat }}</div>
               <div style="font-size: 12px; font-weight: 600; color: #8A98A1;">{{ ev.meta }}</div>
             </div>
@@ -336,7 +347,10 @@
             <div style="font-size: 14px; line-height: 1.55; color: #5B6B76;">{{ ev.desc }}</div>
           </div>
           <sc-if value="{{ ev.isUpcoming }}" hint-placeholder-val="{{ false }}">
-            <button onClick="{{ ev.onReg }}" style="flex: none; background: {{ ev.regBg }}; color: {{ ev.regFg }}; border: 1px solid {{ ev.regBorder }}; border-radius: 4px; padding: 10px 20px; font-size: 14px; font-weight: 700; cursor: pointer;">{{ ev.regLabel }}</button>
+            <button onClick="{{ ev.onReg }}" data-m="ev-reg" style="flex: none; background: {{ ev.regBg }}; color: {{ ev.regFg }}; border: 1px solid {{ ev.regBorder }}; border-radius: 4px; padding: 10px 20px; font-size: 14px; font-weight: 700; cursor: pointer;">{{ ev.regLabel }}</button>
+          </sc-if>
+          <sc-if value="{{ ev.hasImg }}" hint-placeholder-val="{{ false }}">
+            <div style="width: 100%; flex: 1 1 100%;">{{ ev.posterEl }}</div>
           </sc-if>
         </div>
       </sc-for>
@@ -421,7 +435,7 @@
     </sc-if>
 
     <!-- Advisor -->
-    <div style="border: 1px solid #D9E2E8; border-radius: 10px; padding: 32px; display: flex; gap: 32px; align-items: center; margin-bottom: 56px; background: #F4F8FB;">
+    <div data-m="stack" style="border: 1px solid #D9E2E8; border-radius: 10px; padding: 32px; display: flex; gap: 32px; align-items: center; margin-bottom: 56px; background: #F4F8FB;">
       <div style="width: 180px; height: 210px; flex: none;">
         <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="advisor-photo" shape="rounded" placeholder="Drop advisor photo" hint-size="180px,210px" style="width: 180px; height: 210px; display: block;"></x-import>
       </div>
@@ -591,8 +605,9 @@ class Component extends DCLogic {
     emailError: false,
     editTeam: false,
     editEvents: false,
+    menuOpen: false,
     team: (() => { const t = this.loadStored('aess-muj-team-v2'); return (t && t.advisor && t.execs && t.depts) ? t : this.defaultTeam(); })(),
-    events: this.loadStored('aess-muj-events') ?? this.defaultEvents(),
+    events: this.loadStored('aess-muj-events-v2') ?? this.defaultEvents(),
   };
 
   CAT_STYLES = {
@@ -615,12 +630,10 @@ class Component extends DCLogic {
     { id: 'avionics', when: 'upcoming', cat: 'Seminar', month: 'AUG', day: '05', year: '2026', title: 'Careers in Avionics & Flight Systems', desc: 'Guest talk by a senior avionics engineer on certification, DO-178C, and industry pathways.', meta: '4:00 PM · Auditorium 2' },
     { id: 'cansat', when: 'upcoming', cat: 'Competition', month: 'AUG', day: '12', year: '2026', title: 'CanSat Challenge — Kickoff & Team Briefing', desc: 'Rules walkthrough for the intra-college can-sized satellite design challenge.', meta: '5:30 PM · AB2 Seminar Hall' },
     { id: 'freshers', when: 'upcoming', cat: 'Social', month: 'AUG', day: '28', year: '2026', title: "Freshers' Orientation & Chapter Mixer", desc: 'Meet the team, explore our special interest groups, and learn how to get involved.', meta: '6:00 PM · Student Plaza' },
-    { id: 'matlab', when: 'past', cat: 'Workshop', month: 'MAR', day: '14', year: '2026', title: 'MATLAB for Radar Signal Processing', desc: 'From matched filters to CFAR detection, with take-home exercise datasets.', meta: '86 attendees' },
-    { id: 'isro', when: 'past', cat: 'Seminar', month: 'FEB', day: '20', year: '2026', title: 'Designing Interplanetary Missions', desc: 'Guest lecture by an ISRO mission design scientist on trajectory planning.', meta: '210 attendees' },
-    { id: 'uav', when: 'past', cat: 'Competition', month: 'JAN', day: '30', year: '2026', title: 'UAV Delivery: Rapid Prototyping Sprint', desc: 'Six-hour team sprint to design and pitch a campus drone-delivery concept.', meta: '14 teams' },
-    { id: 'pcb', when: 'past', cat: 'Workshop', month: 'NOV', day: '08', year: '2025', title: 'PCB Design for Flight Controllers', desc: 'KiCad from schematic to fab-ready board, using our SIG flight controller.', meta: '52 attendees' },
-    { id: 'chapterday', when: 'past', cat: 'Social', month: 'OCT', day: '03', year: '2025', title: 'Chapter Day & Project Showcase', desc: 'Annual showcase of member projects, demos, and the year in review.', meta: '150+ visitors' },
-    { id: 'aerohack25', when: 'past', cat: 'Flagship', month: 'SEP', day: '19', year: '2025', title: "AeroHack '25", desc: 'Second edition of our flagship hackathon — 220 participants across 42 teams.', meta: '220 participants' },
+    { id: 'milestone26', when: 'past', cat: 'Seminar', month: 'APR', day: '02', year: '2026', title: 'A Memorable Milestone — Executive Visit & Chapter Inauguration', desc: 'Distinguished interaction with Dr. Dinesh Yadav on "How to Configure, Design, Assemble, Test, Launch, and Operate a Satellite", and the official inauguration of the IEEE AESS MUJ Student Branch Chapter.', meta: 'Executive visit & interaction · MUJ', img: 'assets/events/milestone26.jpg' },
+    { id: 'techideate26', when: 'past', cat: 'Competition', month: 'JAN', day: '30', year: '2026', title: 'TechIdeate 2026 — Project Expo 4.0', desc: 'Our flagship technical exhibition — student-led prototypes in UAV and electronic systems, pitched directly to industry mentors in a collaborative, hands-on environment.', meta: 'Flagship technical exhibition · MUJ', img: 'assets/events/techideate26.jpg' },
+    { id: 'leaders25', when: 'past', cat: 'Seminar', month: 'SEP', day: '12', year: '2025', title: 'Meet Your Leaders: Perspectives from Space and Defence', desc: 'Joint session with IEEE MTT-S SBC featuring Dr. Gautam Chattopadhyay (NASA JPL & MTT-S President), Dr. Chinmoy Saha (IIST), and Dr. Ashutosh Kedar (Scientist G, LRDE, DRDO).', meta: 'Joint session with IEEE MTT-S SBC · MUJ', img: 'assets/events/leaders25.jpg' },
+    { id: 'propel25', when: 'past', cat: 'Workshop', month: 'SEP', day: '06', year: '2025', title: "PROPEL '25: The Drone Experience", desc: 'Two-day drone workshop with Dronum Aviation, a DGCA-approved RPTO — UAV mechanics and assembly, flight simulator sessions, and DGCA regulations, airspace and safety.', meta: '6 & 7 Sept · with Dronum Aviation', img: 'assets/events/propel25.jpg' },
   ]; }
 
   ANNOUNCEMENTS = [
@@ -700,7 +713,7 @@ class Component extends DCLogic {
 
   persistEvents(events) {
     this.setState({ events });
-    try { localStorage.setItem('aess-muj-events', JSON.stringify(events)); } catch (e) {}
+    try { localStorage.setItem('aess-muj-events-v2', JSON.stringify(events)); } catch (e) {}
   }
 
   updateAdvisor(field, val) {
@@ -771,7 +784,7 @@ class Component extends DCLogic {
   }
 
   nav(page) {
-    this.setState({ page });
+    this.setState({ page, menuOpen: false });
     window.scrollTo(0, 0);
   }
 
@@ -806,6 +819,8 @@ class Component extends DCLogic {
         ...e,
         catFg: cs.fg, catBg: cs.bg,
         isUpcoming: e.when === 'upcoming',
+        hasImg: !!e.img,
+        posterEl: e.img ? React.createElement('img', { src: e.img, alt: e.title + ' poster', style: { width: '100%', borderRadius: 6, border: '1px solid #D9E2E8', display: 'block' } }) : null,
         onReg: () => this.setState((st) => ({ registered: { ...st.registered, [e.id]: !st.registered[e.id] } })),
         regLabel: reg ? '✓ Registered' : 'Register',
         regBg: reg ? '#E9F6EE' : '#00629B',
@@ -889,6 +904,9 @@ class Component extends DCLogic {
       goTeam: () => this.nav('team'),
       goAnnouncements: () => this.nav('announcements'),
       navItems, footerNav,
+      menuOpen: s.menuOpen,
+      toggleMenu: () => this.setState({ menuOpen: !s.menuOpen }),
+      menuIcon: s.menuOpen ? '✕' : '☰',
 
       // hero
       radarSweep: React.createElement('div', {
