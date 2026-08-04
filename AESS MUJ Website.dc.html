@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet" />
+  <style>
+    body { margin: 0; font-family: 'Open Sans', system-ui, sans-serif; color: #1A2A33; background: #FFFFFF; -webkit-font-smoothing: antialiased; }
+    * { box-sizing: border-box; }
+    button, input { font-family: inherit; }
+    a { color: #00629B; }
+    a:hover { color: #014C77; }
+    @keyframes aessSweep { to { transform: rotate(360deg); } }
+  </style>
+</helmet>
+
+<!-- ============ HEADER ============ -->
+<div data-screen-label="Header" style="position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid #D9E2E8;">
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 32px; height: 68px;">
+    <img src="assets/aess-logo.png" alt="IEEE AESS logo" style="height: 38px; width: auto; cursor: pointer;" onClick="{{ goHome }}" />
+    <div style="display: flex; align-items: center; gap: 22px; margin-left: auto;">
+      <sc-for list="{{ navItems }}" as="nav" hint-placeholder-count="5">
+        <button onClick="{{ nav.onClick }}" style="background: none; border: none; border-bottom: 2px solid {{ nav.bar }}; color: {{ nav.color }}; padding: 23px 2px 21px; font-size: 15px; font-weight: {{ nav.weight }}; cursor: pointer; line-height: 1;">{{ nav.label }}</button>
+      </sc-for>
+    </div>
+    <button onClick="{{ goAbout }}" style="background: #00629B; color: #FFFFFF; border: none; border-radius: 4px; padding: 10px 18px; font-size: 14px; font-weight: 700; cursor: pointer;" style-hover="background: #014C77;">Join AESS</button>
+  </div>
+</div>
+
+<!-- ============ HOME ============ -->
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div data-screen-label="Home">
+
+  <!-- Hero -->
+  <div style="background: #041C2C; color: #FFFFFF; position: relative; overflow: hidden;">
+    <div style="position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px); background-size: 56px 56px;"></div>
+    <div style="position: absolute; top: 50%; right: -140px; width: 620px; height: 620px; margin-top: -310px; border-radius: 50%; border: 1px solid rgba(102,178,226,0.30);">
+      <div style="position: absolute; inset: 78px; border-radius: 50%; border: 1px solid rgba(102,178,226,0.24);"></div>
+      <div style="position: absolute; inset: 156px; border-radius: 50%; border: 1px solid rgba(102,178,226,0.18);"></div>
+      <div style="position: absolute; inset: 234px; border-radius: 50%; border: 1px solid rgba(102,178,226,0.14);"></div>
+      <div style="position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: #66B2E2;"></div>
+      {{ radarSweep }}
+    </div>
+    <div style="max-width: 1140px; margin: 0 auto; padding: 96px 24px 88px; position: relative;">
+      <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #66B2E2; margin-bottom: 18px;">IEEE Student Branch Chapter · Manipal University Jaipur</div>
+      <h1 style="font-size: 52px; font-weight: 800; line-height: 1.12; margin: 0 0 20px; max-width: 640px; text-wrap: pretty;">Advancing aerospace &amp; electronic systems, together.</h1>
+      <p style="font-size: 18px; line-height: 1.65; color: #B8C9D4; margin: 0 0 36px; max-width: 540px; text-wrap: pretty;">The AESS chapter at MUJ is a student community for radar, avionics, navigation, and space systems — through hands-on workshops, competitions, and talks with industry and research leaders.</p>
+      <div style="display: flex; gap: 14px;">
+        <button onClick="{{ goEvents }}" style="background: #00629B; color: #FFFFFF; border: none; border-radius: 4px; padding: 14px 26px; font-size: 15px; font-weight: 700; cursor: pointer;" style-hover="background: #0074B8;">Explore events</button>
+        <button onClick="{{ goTeam }}" style="background: transparent; color: #FFFFFF; border: 1px solid rgba(255,255,255,0.35); border-radius: 4px; padding: 14px 26px; font-size: 15px; font-weight: 700; cursor: pointer;" style-hover="border-color: #FFFFFF; background: rgba(255,255,255,0.06);">Meet the team</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <sc-if value="{{ showStats }}" hint-placeholder-val="{{ true }}">
+    <div style="border-bottom: 1px solid #D9E2E8; background: #FFFFFF;">
+      <div style="max-width: 1140px; margin: 0 auto; padding: 28px 24px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+        <sc-for list="{{ stats }}" as="stat" hint-placeholder-count="4">
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <div style="font-size: 30px; font-weight: 800; color: #041C2C;">{{ stat.value }}</div>
+            <div style="font-size: 13px; font-weight: 600; color: #5B6B76; letter-spacing: 0.02em;">{{ stat.label }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- Focus areas -->
+  <div style="background: #F4F8FB;">
+    <div style="max-width: 1140px; margin: 0 auto; padding: 72px 24px;">
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #00629B; margin-bottom: 10px;">What we do</div>
+      <h2 style="font-size: 30px; font-weight: 800; color: #041C2C; margin: 0 0 36px; max-width: 560px;">Three focus areas, one community</h2>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+        <sc-for list="{{ focusAreas }}" as="area" hint-placeholder-count="3">
+          <div style="background: #FFFFFF; border: 1px solid #D9E2E8; border-radius: 8px; padding: 28px; display: flex; flex-direction: column; gap: 14px;" style-hover="border-color: #00629B; box-shadow: 0 8px 24px rgba(4,28,44,0.08);">
+            <div style="width: 44px; height: 44px; border-radius: 6px; background: #E8F1F8; color: #00629B; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800;">{{ area.glyph }}</div>
+            <div style="font-size: 18px; font-weight: 700; color: #041C2C;">{{ area.title }}</div>
+            <div style="font-size: 14px; line-height: 1.6; color: #5B6B76;">{{ area.desc }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upcoming preview -->
+  <div style="max-width: 1140px; margin: 0 auto; padding: 72px 24px;">
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px;">
+      <div>
+        <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #00629B; margin-bottom: 10px;">Calendar</div>
+        <h2 style="font-size: 30px; font-weight: 800; color: #041C2C; margin: 0;">Upcoming events</h2>
+      </div>
+      <button onClick="{{ goEvents }}" style="background: none; border: none; color: #00629B; font-size: 15px; font-weight: 700; cursor: pointer; padding: 8px 0;" style-hover="color: #014C77;">View all events →</button>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+      <sc-for list="{{ homeEvents }}" as="ev" hint-placeholder-count="3">
+        <div onClick="{{ goEvents }}" style="border: 1px solid #D9E2E8; border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 12px; cursor: pointer; background: #FFFFFF;" style-hover="border-color: #00629B; box-shadow: 0 8px 24px rgba(4,28,44,0.08);">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="font-size: 13px; font-weight: 800; color: #00629B; letter-spacing: 0.06em;">{{ ev.month }} {{ ev.day }}</div>
+            <div style="font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: {{ ev.catBg }}; color: {{ ev.catFg }};">{{ ev.cat }}</div>
+          </div>
+          <div style="font-size: 17px; font-weight: 700; color: #041C2C; line-height: 1.35;">{{ ev.title }}</div>
+          <div style="font-size: 13px; color: #5B6B76;">{{ ev.venue }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- Announcement strip -->
+  <div style="background: #E8F1F8; border-top: 1px solid #D9E2E8; border-bottom: 1px solid #D9E2E8;">
+    <div style="max-width: 1140px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; gap: 14px;">
+      <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.1em; color: #FFFFFF; background: #00629B; border-radius: 3px; padding: 4px 8px;">NEW</div>
+      <div style="font-size: 14px; font-weight: 600; color: #1A2A33;">{{ latestAnnouncement }}</div>
+      <button onClick="{{ goAnnouncements }}" style="margin-left: auto; background: none; border: none; color: #00629B; font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap;" style-hover="color: #014C77;">All announcements →</button>
+    </div>
+  </div>
+
+  <!-- Membership band -->
+  <div style="background: #041C2C; color: #FFFFFF;">
+    <div style="max-width: 1140px; margin: 0 auto; padding: 64px 24px; display: flex; align-items: center; justify-content: space-between; gap: 32px;">
+      <div>
+        <h2 style="font-size: 28px; font-weight: 800; margin: 0 0 10px;">Become a member</h2>
+        <p style="font-size: 15px; color: #B8C9D4; margin: 0; max-width: 520px; line-height: 1.6;">Open to all MUJ students, every discipline. Join IEEE at the student rate, add AESS, and you're in.</p>
+      </div>
+      <button onClick="{{ goAbout }}" style="background: #00629B; color: #FFFFFF; border: none; border-radius: 4px; padding: 14px 26px; font-size: 15px; font-weight: 700; cursor: pointer; white-space: nowrap;" style-hover="background: #0074B8;">How to join</button>
+    </div>
+  </div>
+
+</div>
+</sc-if>
+
+<!-- ============ ABOUT ============ -->
+<sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="About">
+
+  <div style="background: #041C2C; color: #FFFFFF;">
+    <div style="max-width: 1140px; margin: 0 auto; padding: 64px 24px;">
+      <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #66B2E2; margin-bottom: 14px;">About the chapter</div>
+      <h1 style="font-size: 40px; font-weight: 800; margin: 0; max-width: 640px;">Who we are</h1>
+    </div>
+  </div>
+
+  <div style="max-width: 1140px; margin: 0 auto; padding: 64px 24px; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 56px;">
+    <div>
+      <h2 style="font-size: 24px; font-weight: 800; color: #041C2C; margin: 0 0 16px;">Our mission</h2>
+      <p style="font-size: 16px; line-height: 1.75; color: #41525D; margin: 0 0 18px; text-wrap: pretty;">The IEEE Aerospace and Electronic Systems Society chapter at Manipal University Jaipur exists to give students a practical route into aerospace and electronic systems — the radar, navigation, avionics, and space technologies that most curricula only touch in theory.</p>
+      <p style="font-size: 16px; line-height: 1.75; color: #41525D; margin: 0 0 32px; text-wrap: pretty;">We run hands-on workshops, host engineers and researchers from industry and ISRO, field teams for national design competitions, and support member-led special interest groups building real hardware and software.</p>
+      <h2 style="font-size: 24px; font-weight: 800; color: #041C2C; margin: 0 0 16px;">What we run</h2>
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <sc-for list="{{ activities }}" as="act" hint-placeholder-count="4">
+          <div style="display: flex; gap: 14px; align-items: flex-start;">
+            <div style="width: 8px; height: 8px; border-radius: 50%; background: #00629B; margin-top: 8px; flex: none;"></div>
+            <div style="font-size: 15px; line-height: 1.65; color: #41525D;"><strong style="color: #1A2A33;">{{ act.title }}</strong> — {{ act.desc }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+      <div style="background: #F4F8FB; border: 1px solid #D9E2E8; border-radius: 8px; padding: 28px;">
+        <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #00629B; margin-bottom: 12px;">Parent society</div>
+        <div style="font-size: 16px; font-weight: 700; color: #041C2C; margin-bottom: 10px;">IEEE Aerospace &amp; Electronic Systems Society</div>
+        <p style="font-size: 14px; line-height: 1.65; color: #5B6B76; margin: 0 0 14px;">One of IEEE's oldest societies, covering systems for space, air, ocean, and ground environments — from radar and GNSS to autonomous systems.</p>
+        <a href="https://ieee-aess.org" target="_blank" rel="noopener" style="font-size: 14px; font-weight: 700;">ieee-aess.org →</a>
+      </div>
+      <div style="border: 1px solid #D9E2E8; border-radius: 8px; padding: 28px;">
+        <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #00629B; margin-bottom: 14px;">Fields of interest</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <sc-for list="{{ fields }}" as="f" hint-placeholder-count="8">
+            <div style="font-size: 13px; font-weight: 600; color: #00629B; background: #E8F1F8; border-radius: 999px; padding: 6px 13px;">{{ f }}</div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Milestones -->
+  <div style="background: #F4F8FB; border-top: 1px solid #D9E2E8;">
+    <div style="max-width: 1140px; margin: 0 auto; padding: 64px 24px;">
+      <h2 style="font-size: 28px; font-weight: 800; color: #041C2C; margin: 0 0 36px;">Milestones</h2>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+        <sc-for list="{{ milestones }}" as="m" hint-placeholder-count="4">
+          <div style="background: #FFFFFF; border: 1px solid #D9E2E8; border-radius: 8px; padding: 24px; border-top: 3px solid #00629B;">
+            <div style="font-size: 22px; font-weight: 800; color: #00629B; margin-bottom: 8px;">{{ m.year }}</div>
+            <div style="font-size: 14px; line-height: 1.6; color: #41525D;">{{ m.text }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- How to join -->
+  <div style="max-width: 1140px; margin: 0 auto; padding: 64px 24px 80px;">
+    <h2 style="font-size: 28px; font-weight: 800; color: #041C2C; margin: 0 0 8px;">How to join</h2>
+    <p style="font-size: 15px; color: #5B6B76; margin: 0 0 32px;">Three steps. Membership runs on the calendar year.</p>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+      <sc-for list="{{ joinSteps }}" as="step" hint-placeholder-count="3">
+        <div style="border: 1px solid #D9E2E8; border-radius: 8px; padding: 28px;">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: #041C2C; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; margin-bottom: 16px;">{{ step.n }}</div>
+          <div style="font-size: 16px; font-weight: 700; color: #041C2C; margin-bottom: 8px;">{{ step.title }}</div>
+          <div style="font-size: 14px; line-height: 1.6; color: #5B6B76;">{{ step.desc }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+</div>
+</sc-if>
+
+<!-- ============ EVENTS ============ -->
+<sc-if value="{{ isEvents }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Events">
+
+  <div style="background: #041C2C; color: #FFFFFF;">
+    <div style="max-width: 1140px; margin: 0 auto; padding: 64px 24px;">
+      <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #66B2E2; margin-bottom: 14px;">Events</div>
+      <h1 style="font-size: 40px; font-weight: 800; margin: 0;">Workshops, talks &amp; competitions</h1>
+    </div>
+  </div>
+
+  <div style="max-width: 1140px; margin: 0 auto; padding: 40px 24px 80px;">
+
+    <!-- Controls -->
+    <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 28px;">
+      <div style="display: flex; background: #EEF2F4; border-radius: 6px; padding: 4px;">
+        <button onClick="{{ showUpcoming }}" style="border: none; border-radius: 4px; padding: 9px 20px; font-size: 14px; font-weight: 700; cursor: pointer; background: {{ upcomingTabBg }}; color: {{ upcomingTabFg }}; box-shadow: {{ upcomingTabShadow }};">Upcoming</button>
+        <button onClick="{{ showPast }}" style="border: none; border-radius: 4px; padding: 9px 20px; font-size: 14px; font-weight: 700; cursor: pointer; background: {{ pastTabBg }}; color: {{ pastTabFg }}; box-shadow: {{ pastTabShadow }};">Past</button>
+      </div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <sc-for list="{{ categoryChips }}" as="chip" hint-placeholder-count="6">
+          <button onClick="{{ chip.onClick }}" style="border: 1px solid {{ chip.border }}; background: {{ chip.bg }}; color: {{ chip.fg }}; border-radius: 999px; padding: 8px 16px; font-size: 13px; font-weight: 700; cursor: pointer;">{{ chip.label }}</button>
+        </sc-for>
+      </div>
+      <button onClick="{{ toggleEditEvents }}" style="margin-left: auto; background: {{ editEventsBg }}; color: {{ editEventsFg }}; border: 1px solid {{ editEventsBorder }}; border-radius: 4px; padding: 9px 18px; font-size: 13px; font-weight: 700; cursor: pointer;">{{ editEventsLabel }}</button>
+    </div>
+
+    <sc-if value="{{ editingEvents }}" hint-placeholder-val="{{ false }}">
+      <div style="border: 1px solid #B7D3E6; background: #F4F8FB; border-radius: 10px; padding: 26px; margin-bottom: 32px;">
+        <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px; flex-wrap: wrap;">
+          <div style="font-size: 17px; font-weight: 800; color: #041C2C;">Edit events</div>
+          <div style="font-size: 13px; color: #5B6B76;">All events across both tabs. Changes save in this browser as you type.</div>
+          <button onClick="{{ addEvent }}" style="margin-left: auto; background: #FFFFFF; border: 1px solid #00629B; color: #00629B; border-radius: 4px; padding: 5px 12px; font-size: 12px; font-weight: 700; cursor: pointer;" style-hover="background: #E8F1F8;">+ Add event</button>
+          <button onClick="{{ resetEvents }}" style="background: none; border: none; padding: 0; color: #B23A48; font-size: 13px; font-weight: 700; cursor: pointer;">Reset to defaults</button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <sc-for list="{{ eventEditRows }}" as="r" hint-placeholder-count="4">
+            <div style="background: #FFFFFF; border: 1px solid #D9E2E8; border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: grid; grid-template-columns: 112px 128px 58px 48px 62px 1fr 36px; gap: 8px; align-items: stretch;">
+                <select value="{{ r.when }}" onChange="{{ r.onWhen }}" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px 6px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;">
+                  <option value="upcoming">Upcoming</option>
+                  <option value="past">Past</option>
+                </select>
+                <select value="{{ r.cat }}" onChange="{{ r.onCat }}" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px 6px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;">
+                  <option value="Workshop">Workshop</option>
+                  <option value="Seminar">Seminar</option>
+                  <option value="Competition">Competition</option>
+                  <option value="Social">Social</option>
+                  <option value="Flagship">Flagship</option>
+                </select>
+                <input value="{{ r.month }}" onChange="{{ r.onMonth }}" placeholder="MON" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none; min-width: 0;" style-focus="border-color: #00629B;" />
+                <input value="{{ r.day }}" onChange="{{ r.onDay }}" placeholder="DD" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none; min-width: 0;" style-focus="border-color: #00629B;" />
+                <input value="{{ r.year }}" onChange="{{ r.onYear }}" placeholder="YYYY" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none; min-width: 0;" style-focus="border-color: #00629B;" />
+                <input value="{{ r.title }}" onChange="{{ r.onTitle }}" placeholder="Event title" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px 11px; font-size: 13px; font-weight: 600; background: #FFFFFF; color: #1A2A33; outline: none; min-width: 0;" style-focus="border-color: #00629B;" />
+                <button onClick="{{ r.onRemove }}" title="Remove event" style="background: #FFFFFF; border: 1px solid #D9E2E8; border-radius: 4px; color: #B23A48; font-size: 14px; font-weight: 700; cursor: pointer;" style-hover="border-color: #B23A48;">✕</button>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1.7fr; gap: 8px;">
+                <input value="{{ r.meta }}" onChange="{{ r.onMeta }}" placeholder="Time · Venue · Capacity" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none; min-width: 0;" style-focus="border-color: #00629B;" />
+                <input value="{{ r.desc }}" onChange="{{ r.onDesc }}" placeholder="One-line description" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none; min-width: 0;" style-focus="border-color: #00629B;" />
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- Flagship banner -->
+    <sc-if value="{{ showFlagshipBanner }}" hint-placeholder-val="{{ false }}">
+      <div style="background: linear-gradient(120deg, #041C2C 0%, #0B3D5C 100%); border-radius: 10px; overflow: hidden; display: grid; grid-template-columns: 1.15fr 0.85fr; margin-bottom: 32px;">
+        <div style="padding: 40px; color: #FFFFFF;">
+          <div style="display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; color: #041C2C; background: #FFC845; border-radius: 3px; padding: 5px 10px; margin-bottom: 18px;">FLAGSHIP · REGISTRATION OPEN</div>
+          <h2 style="font-size: 34px; font-weight: 800; margin: 0 0 12px;">AeroHack '26</h2>
+          <p style="font-size: 15px; line-height: 1.65; color: #B8C9D4; margin: 0 0 22px; max-width: 420px;">Our 48-hour aerospace systems hackathon. Build for tracks in UAS autonomy, radar sensing, and satellite ground systems — with mentors from industry.</p>
+          <div style="display: flex; gap: 22px; margin-bottom: 26px; font-size: 14px; font-weight: 600; color: #E8F1F8;">
+            <div>Aug 21–23, 2026</div>
+            <div>Dome Building, MUJ</div>
+            <div>Teams of 2–4</div>
+          </div>
+          <button onClick="{{ regFlagship }}" style="background: {{ flagshipRegBg }}; color: {{ flagshipRegFg }}; border: none; border-radius: 4px; padding: 13px 24px; font-size: 15px; font-weight: 700; cursor: pointer;">{{ flagshipRegLabel }}</button>
+        </div>
+        <div style="min-height: 300px;">
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="flagship-photo" placeholder="Drop AeroHack photo here" hint-size="100%,300px" style="width: 100%; height: 100%; display: block;"></x-import>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- Event list -->
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <sc-for list="{{ visibleEvents }}" as="ev" hint-placeholder-count="4">
+        <div style="border: 1px solid #D9E2E8; border-radius: 8px; padding: 22px 24px; display: flex; gap: 22px; align-items: center; background: #FFFFFF;" style-hover="border-color: #00629B; box-shadow: 0 8px 24px rgba(4,28,44,0.07);">
+          <div style="width: 68px; flex: none; background: #E8F1F8; border-radius: 6px; padding: 10px 4px; text-align: center;">
+            <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; color: #00629B;">{{ ev.month }}</div>
+            <div style="font-size: 20px; font-weight: 800; color: #041C2C; line-height: 1.2;">{{ ev.day }}</div>
+            <div style="font-size: 11px; font-weight: 600; color: #5B6B76;">{{ ev.year }}</div>
+          </div>
+          <div style="flex: 1; min-width: 0;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+              <div style="font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: {{ ev.catBg }}; color: {{ ev.catFg }};">{{ ev.cat }}</div>
+              <div style="font-size: 12px; font-weight: 600; color: #8A98A1;">{{ ev.meta }}</div>
+            </div>
+            <div style="font-size: 17px; font-weight: 700; color: #041C2C; margin-bottom: 4px;">{{ ev.title }}</div>
+            <div style="font-size: 14px; line-height: 1.55; color: #5B6B76;">{{ ev.desc }}</div>
+          </div>
+          <sc-if value="{{ ev.isUpcoming }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ ev.onReg }}" style="flex: none; background: {{ ev.regBg }}; color: {{ ev.regFg }}; border: 1px solid {{ ev.regBorder }}; border-radius: 4px; padding: 10px 20px; font-size: 14px; font-weight: 700; cursor: pointer;">{{ ev.regLabel }}</button>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ noEvents }}" hint-placeholder-val="{{ false }}">
+      <div style="text-align: center; padding: 48px 24px; color: #8A98A1; font-size: 15px; border: 1px dashed #D9E2E8; border-radius: 8px;">No events in this category — try another filter.</div>
+    </sc-if>
+
+  </div>
+</div>
+</sc-if>
+
+<!-- ============ TEAM ============ -->
+<sc-if value="{{ isTeam }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Team">
+
+  <div style="background: #041C2C; color: #FFFFFF;">
+    <div style="max-width: 1140px; margin: 0 auto; padding: 64px 24px;">
+      <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #66B2E2; margin-bottom: 14px;">Team</div>
+      <h1 style="font-size: 40px; font-weight: 800; margin: 0;">The people running the chapter</h1>
+      <div style="font-size: 15px; font-weight: 600; color: #B8C9D4; margin-top: 12px;">Working Committee · Academic Year 2026–27</div>
+    </div>
+  </div>
+
+  <div style="max-width: 1140px; margin: 0 auto; padding: 32px 24px 80px;">
+
+    <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+      <button onClick="{{ toggleEditTeam }}" style="background: {{ editTeamBg }}; color: {{ editTeamFg }}; border: 1px solid {{ editTeamBorder }}; border-radius: 4px; padding: 9px 18px; font-size: 13px; font-weight: 700; cursor: pointer;">{{ editTeamLabel }}</button>
+    </div>
+
+    <sc-if value="{{ editingTeam }}" hint-placeholder-val="{{ false }}">
+      <div style="border: 1px solid #B7D3E6; background: #F4F8FB; border-radius: 10px; padding: 26px; margin-bottom: 36px;">
+        <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
+          <div style="font-size: 17px; font-weight: 800; color: #041C2C;">Edit team</div>
+          <div style="font-size: 13px; color: #5B6B76;">Changes save in this browser as you type. Drag photos onto the cards below.</div>
+          <button onClick="{{ resetTeam }}" style="margin-left: auto; background: none; border: none; padding: 0; color: #B23A48; font-size: 13px; font-weight: 700; cursor: pointer;">Reset to defaults</button>
+        </div>
+        <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #00629B; margin-bottom: 10px;">Faculty advisor</div>
+        <div style="display: grid; grid-template-columns: 1fr 1.6fr 1.2fr; gap: 10px; margin-bottom: 26px;">
+          <input value="{{ advisorName }}" onChange="{{ onAdvisorName }}" placeholder="Name" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 9px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
+          <input value="{{ advisorDept }}" onChange="{{ onAdvisorDept }}" placeholder="Department" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 9px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
+          <input value="{{ advisorEmail }}" onChange="{{ onAdvisorEmail }}" placeholder="Email" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 9px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+          <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #00629B;">Executive committee</div>
+          <button onClick="{{ addExec }}" style="background: #FFFFFF; border: 1px solid #00629B; color: #00629B; border-radius: 4px; padding: 5px 12px; font-size: 12px; font-weight: 700; cursor: pointer;" style-hover="background: #E8F1F8;">+ Add member</button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 26px;">
+          <sc-for list="{{ execEditRows }}" as="r" hint-placeholder-count="4">
+            <div style="display: grid; grid-template-columns: 1.3fr 1.1fr 1.1fr 36px; gap: 10px; align-items: stretch;">
+              <input value="{{ r.name }}" onChange="{{ r.onName }}" placeholder="Full name" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 9px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
+              <input value="{{ r.role }}" onChange="{{ r.onRole }}" placeholder="Role" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 9px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
+              <input value="{{ r.sub }}" onChange="{{ r.onSub }}" placeholder="Branch · Year" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 9px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
+              <button onClick="{{ r.onRemove }}" title="Remove member" style="background: #FFFFFF; border: 1px solid #D9E2E8; border-radius: 4px; color: #B23A48; font-size: 14px; font-weight: 700; cursor: pointer;" style-hover="border-color: #B23A48;">✕</button>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+          <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #00629B;">Core team departments</div>
+          <button onClick="{{ addDept }}" style="background: #FFFFFF; border: 1px solid #00629B; color: #00629B; border-radius: 4px; padding: 5px 12px; font-size: 12px; font-weight: 700; cursor: pointer;" style-hover="background: #E8F1F8;">+ Add department</button>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; align-items: start;">
+          <sc-for list="{{ deptEditRows }}" as="d" hint-placeholder-count="4">
+            <div style="background: #FFFFFF; border: 1px solid #D9E2E8; border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: grid; grid-template-columns: 1fr 36px; gap: 8px; align-items: stretch;">
+                <input value="{{ d.name }}" onChange="{{ d.onName }}" placeholder="Department name" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 9px 11px; font-size: 13px; font-weight: 700; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
+                <button onClick="{{ d.onRemove }}" title="Remove department" style="background: #FFFFFF; border: 1px solid #D9E2E8; border-radius: 4px; color: #B23A48; font-size: 14px; font-weight: 700; cursor: pointer;" style-hover="border-color: #B23A48;">✕</button>
+              </div>
+              <sc-for list="{{ d.memberRows }}" as="mr" hint-placeholder-count="2">
+                <div style="display: grid; grid-template-columns: 1.2fr 1fr 36px; gap: 8px; align-items: stretch;">
+                  <input value="{{ mr.name }}" onChange="{{ mr.onName }}" placeholder="Full name" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
+                  <input value="{{ mr.role }}" onChange="{{ mr.onRole }}" placeholder="Role" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
+                  <button onClick="{{ mr.onRemove }}" title="Remove member" style="background: #FFFFFF; border: 1px solid #D9E2E8; border-radius: 4px; color: #B23A48; font-size: 14px; font-weight: 700; cursor: pointer;" style-hover="border-color: #B23A48;">✕</button>
+                </div>
+              </sc-for>
+              <button onClick="{{ d.addMember }}" style="align-self: flex-start; background: #FFFFFF; border: 1px solid #00629B; color: #00629B; border-radius: 4px; padding: 5px 12px; font-size: 12px; font-weight: 700; cursor: pointer;" style-hover="background: #E8F1F8;">+ Add member</button>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- Advisor -->
+    <div style="border: 1px solid #D9E2E8; border-radius: 10px; padding: 32px; display: flex; gap: 32px; align-items: center; margin-bottom: 56px; background: #F4F8FB;">
+      <div style="width: 180px; height: 210px; flex: none;">
+        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="advisor-photo" shape="rounded" placeholder="Drop advisor photo" hint-size="180px,210px" style="width: 180px; height: 210px; display: block;"></x-import>
+      </div>
+      <div>
+        <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #00629B; margin-bottom: 10px;">Faculty advisor</div>
+        <div style="font-size: 26px; font-weight: 800; color: #041C2C; margin-bottom: 4px;">{{ advisorName }}</div>
+        <div style="font-size: 15px; font-weight: 600; color: #5B6B76; margin-bottom: 14px;">{{ advisorDept }}</div>
+        <p style="font-size: 15px; line-height: 1.65; color: #41525D; margin: 0 0 14px; max-width: 560px;">Branch advisor for IEEE AESS MUJ — guides the chapter's direction and activities.</p>
+        <a href="mailto:{{ advisorEmail }}" style="font-size: 14px; font-weight: 700;">{{ advisorEmail }}</a>
+      </div>
+    </div>
+
+    <!-- Exec board -->
+    <h2 style="font-size: 24px; font-weight: 800; color: #041C2C; margin: 0 0 24px;">Executive committee</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 20px; margin-bottom: 56px;">
+      <sc-for list="{{ execs }}" as="p" hint-placeholder-count="7">
+        <div style="border: 1px solid #D9E2E8; border-radius: 8px; padding: 26px 22px; text-align: center;" style-hover="border-color: #00629B; box-shadow: 0 8px 24px rgba(4,28,44,0.08);">
+          <div style="width: 110px; height: 110px; margin: 0 auto 14px;">
+            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ p.slotId }}" shape="circle" placeholder="{{ p.initials }}" hint-size="110px,110px" style="width: 110px; height: 110px; display: block;"></x-import>
+          </div>
+          <div style="font-size: 16px; font-weight: 700; color: #041C2C;">{{ p.name }}</div>
+          <div style="font-size: 13px; font-weight: 700; color: #00629B; margin: 4px 0 6px;">{{ p.role }}</div>
+          <div style="font-size: 12px; color: #8A98A1;">{{ p.sub }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- Core team departments -->
+    <h2 style="font-size: 24px; font-weight: 800; color: #041C2C; margin: 0 0 6px;">Core team</h2>
+    <div style="font-size: 14px; font-weight: 600; color: #5B6B76; margin: 0 0 24px;">Tenure 2026–27 · department heads, joint heads &amp; senior coordinators</div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 16px; align-items: start;">
+      <sc-for list="{{ deptCards }}" as="d" hint-placeholder-count="8">
+        <div style="border: 1px solid #D9E2E8; border-radius: 8px; overflow: hidden; background: #FFFFFF;" style-hover="border-color: #00629B; box-shadow: 0 8px 24px rgba(4,28,44,0.07);">
+          <div style="background: #041C2C; color: #FFFFFF; padding: 12px 18px; font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;">{{ d.name }}</div>
+          <sc-for list="{{ d.members }}" as="mr" hint-placeholder-count="2">
+            <div style="display: flex; align-items: center; gap: 12px; padding: 11px 18px; border-top: 1px solid #EEF2F4;">
+              <div style="font-size: 12px; font-weight: 700; color: #00629B; width: 128px; flex: none;">{{ mr.role }}</div>
+              <div style="font-size: 14px; font-weight: 600; color: #1A2A33;">{{ mr.name }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+
+  </div>
+</div>
+</sc-if>
+
+<!-- ============ ANNOUNCEMENTS ============ -->
+<sc-if value="{{ isAnnouncements }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Announcements">
+
+  <div style="background: #041C2C; color: #FFFFFF;">
+    <div style="max-width: 1140px; margin: 0 auto; padding: 64px 24px;">
+      <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #66B2E2; margin-bottom: 14px;">Announcements</div>
+      <h1 style="font-size: 40px; font-weight: 800; margin: 0;">Chapter noticeboard</h1>
+    </div>
+  </div>
+
+  <div style="max-width: 1140px; margin: 0 auto; padding: 40px 24px 80px; display: grid; grid-template-columns: 1fr 320px; gap: 40px; align-items: start;">
+    <div>
+      <!-- Pinned -->
+      <div style="background: #E8F1F8; border: 1px solid #B7D3E6; border-radius: 8px; padding: 26px; margin-bottom: 28px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+          <div style="font-size: 10px; font-weight: 800; letter-spacing: 0.12em; color: #FFFFFF; background: #00629B; border-radius: 3px; padding: 4px 8px;">PINNED</div>
+          <div style="font-size: 13px; font-weight: 600; color: #5B6B76;">July 8, 2026</div>
+        </div>
+        <div style="font-size: 19px; font-weight: 800; color: #041C2C; margin-bottom: 8px;">AeroHack '26 registrations are now open</div>
+        <div style="font-size: 14px; line-height: 1.65; color: #41525D; margin-bottom: 14px;">Team registration for our flagship 48-hour hackathon is live. Early-bird closes July 31 — IEEE members register free.</div>
+        <button onClick="{{ goEvents }}" style="background: none; border: none; padding: 0; color: #00629B; font-size: 14px; font-weight: 700; cursor: pointer;" style-hover="color: #014C77;">View event details →</button>
+      </div>
+
+      <!-- Tag filters -->
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
+        <sc-for list="{{ tagChips }}" as="chip" hint-placeholder-count="5">
+          <button onClick="{{ chip.onClick }}" style="border: 1px solid {{ chip.border }}; background: {{ chip.bg }}; color: {{ chip.fg }}; border-radius: 999px; padding: 8px 16px; font-size: 13px; font-weight: 700; cursor: pointer;">{{ chip.label }}</button>
+        </sc-for>
+      </div>
+
+      <!-- List -->
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <sc-for list="{{ visibleAnnouncements }}" as="a" hint-placeholder-count="4">
+          <div style="border: 1px solid #D9E2E8; border-radius: 8px; padding: 22px 24px;" style-hover="border-color: #00629B;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+              <div style="font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: {{ a.tagBg }}; color: {{ a.tagFg }};">{{ a.tag }}</div>
+              <div style="font-size: 13px; font-weight: 600; color: #8A98A1;">{{ a.date }}</div>
+            </div>
+            <div style="font-size: 16px; font-weight: 700; color: #041C2C; margin-bottom: 6px;">{{ a.title }}</div>
+            <div style="font-size: 14px; line-height: 1.6; color: #5B6B76;">{{ a.body }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- Subscribe -->
+    <div style="border: 1px solid #D9E2E8; border-radius: 8px; padding: 26px; background: #F4F8FB; position: sticky; top: 92px;">
+      <div style="font-size: 16px; font-weight: 800; color: #041C2C; margin-bottom: 8px;">Get updates in your inbox</div>
+      <div style="font-size: 13px; line-height: 1.6; color: #5B6B76; margin-bottom: 18px;">One email a week, only when something's happening. No spam.</div>
+      <sc-if value="{{ notSubscribed }}" hint-placeholder-val="{{ true }}">
+        <input value="{{ email }}" onChange="{{ onEmailChange }}" placeholder="you@muj.manipal.edu" style="width: 100%; border: 1px solid #C6D3DB; border-radius: 4px; padding: 11px 13px; font-size: 14px; margin-bottom: 10px; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
+        <button onClick="{{ subscribe }}" style="width: 100%; background: #00629B; color: #FFFFFF; border: none; border-radius: 4px; padding: 12px; font-size: 14px; font-weight: 700; cursor: pointer;" style-hover="background: #014C77;">Subscribe</button>
+        <sc-if value="{{ emailError }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size: 12px; font-weight: 600; color: #B23A48; margin-top: 8px;">Please enter a valid email address.</div>
+        </sc-if>
+      </sc-if>
+      <sc-if value="{{ subscribed }}" hint-placeholder-val="{{ false }}">
+        <div style="background: #E9F6EE; border: 1px solid #BFE3CC; border-radius: 6px; padding: 14px; font-size: 14px; font-weight: 700; color: #1E7A3C;">✓ You're subscribed — see you in your inbox.</div>
+      </sc-if>
+    </div>
+  </div>
+
+</div>
+</sc-if>
+
+<!-- ============ FOOTER ============ -->
+<div data-screen-label="Footer" style="background: #041C2C; color: #B8C9D4;">
+  <div style="max-width: 1140px; margin: 0 auto; padding: 56px 24px 0; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px;">
+    <div>
+      <img src="assets/aess-logo-white.png" alt="IEEE AESS" style="height: 34px; width: auto; margin-bottom: 16px;" />
+      <div style="font-size: 13px; line-height: 1.65; max-width: 280px;">IEEE Aerospace &amp; Electronic Systems Society student chapter, Manipal University Jaipur.</div>
+    </div>
+    <div>
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #FFFFFF; margin-bottom: 16px;">Chapter</div>
+      <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
+        <sc-for list="{{ footerNav }}" as="nav" hint-placeholder-count="5">
+          <button onClick="{{ nav.onClick }}" style="background: none; border: none; padding: 0; color: #B8C9D4; font-size: 14px; cursor: pointer;" style-hover="color: #FFFFFF;">{{ nav.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div>
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #FFFFFF; margin-bottom: 16px;">Resources</div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <a href="https://www.ieee.org" target="_blank" rel="noopener" style="color: #B8C9D4; font-size: 14px; text-decoration: none;" style-hover="color: #FFFFFF;">IEEE.org</a>
+        <a href="https://ieee-aess.org" target="_blank" rel="noopener" style="color: #B8C9D4; font-size: 14px; text-decoration: none;" style-hover="color: #FFFFFF;">IEEE AESS</a>
+        <a href="https://jaipur.manipal.edu" target="_blank" rel="noopener" style="color: #B8C9D4; font-size: 14px; text-decoration: none;" style-hover="color: #FFFFFF;">Manipal University Jaipur</a>
+        <a href="https://ieeexplore.ieee.org" target="_blank" rel="noopener" style="color: #B8C9D4; font-size: 14px; text-decoration: none;" style-hover="color: #FFFFFF;">IEEE Xplore</a>
+      </div>
+    </div>
+    <div>
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #FFFFFF; margin-bottom: 16px;">Contact</div>
+      <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px;">
+        <a href="mailto:aess.muj@muj.manipal.edu" style="color: #B8C9D4; text-decoration: none;" style-hover="color: #FFFFFF;">aess.muj@muj.manipal.edu</a>
+        <div>Academic Block 1, MUJ<br />Dehmi Kalan, Jaipur 303007</div>
+      </div>
+    </div>
+  </div>
+  <div style="max-width: 1140px; margin: 24px auto 0; padding: 20px 24px; border-top: 1px solid rgba(255,255,255,0.12); display: flex; justify-content: space-between; gap: 16px; font-size: 12px; color: #7E93A1;">
+    <div>© 2026 IEEE AESS Student Branch Chapter, Manipal University Jaipur</div>
+    <div>Built by the chapter web team</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;initialPage&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;home&quot;, &quot;about&quot;, &quot;events&quot;, &quot;team&quot;, &quot;announcements&quot;], &quot;default&quot;: &quot;home&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Navigation&quot; },
+  &quot;eventsDefaultTab&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;upcoming&quot;, &quot;past&quot;], &quot;default&quot;: &quot;upcoming&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Navigation&quot; },
+  &quot;showStats&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Home&quot; }
+}">
+class Component extends DCLogic {
+  state = {
+    page: this.props.initialPage ?? 'home',
+    tab: this.props.eventsDefaultTab ?? 'upcoming',
+    cat: 'All',
+    tag: 'All',
+    registered: {},
+    email: '',
+    subscribed: false,
+    emailError: false,
+    editTeam: false,
+    editEvents: false,
+    team: (() => { const t = this.loadStored('aess-muj-team-v2'); return (t && t.advisor && t.execs && t.depts) ? t : this.defaultTeam(); })(),
+    events: this.loadStored('aess-muj-events') ?? this.defaultEvents(),
+  };
+
+  CAT_STYLES = {
+    Workshop:    { fg: '#00629B', bg: '#E8F1F8' },
+    Seminar:     { fg: '#0F7B8A', bg: '#E4F3F4' },
+    Competition: { fg: '#3E4FA3', bg: '#EBEDF9' },
+    Social:      { fg: '#5B6B76', bg: '#EEF2F4' },
+    Flagship:    { fg: '#946200', bg: '#FFF4DA' },
+  };
+
+  TAG_STYLES = {
+    General:       { fg: '#00629B', bg: '#E8F1F8' },
+    Recruitment:   { fg: '#0F7B8A', bg: '#E4F3F4' },
+    Results:       { fg: '#3E4FA3', bg: '#EBEDF9' },
+    Opportunities: { fg: '#946200', bg: '#FFF4DA' },
+  };
+
+  defaultEvents() { return [
+    { id: 'sdr', when: 'upcoming', cat: 'Workshop', month: 'JUL', day: '24', year: '2026', title: 'Hands-on SDR: Spectrum Sensing Basics', desc: 'Build a live FM and ADS-B receiver with RTL-SDR dongles. Kits provided; bring a laptop.', meta: '2:00–5:00 PM · AB1 Lab 204 · 40 seats' },
+    { id: 'avionics', when: 'upcoming', cat: 'Seminar', month: 'AUG', day: '05', year: '2026', title: 'Careers in Avionics & Flight Systems', desc: 'Guest talk by a senior avionics engineer on certification, DO-178C, and industry pathways.', meta: '4:00 PM · Auditorium 2' },
+    { id: 'cansat', when: 'upcoming', cat: 'Competition', month: 'AUG', day: '12', year: '2026', title: 'CanSat Challenge — Kickoff & Team Briefing', desc: 'Rules walkthrough for the intra-college can-sized satellite design challenge.', meta: '5:30 PM · AB2 Seminar Hall' },
+    { id: 'freshers', when: 'upcoming', cat: 'Social', month: 'AUG', day: '28', year: '2026', title: "Freshers' Orientation & Chapter Mixer", desc: 'Meet the team, explore our special interest groups, and learn how to get involved.', meta: '6:00 PM · Student Plaza' },
+    { id: 'matlab', when: 'past', cat: 'Workshop', month: 'MAR', day: '14', year: '2026', title: 'MATLAB for Radar Signal Processing', desc: 'From matched filters to CFAR detection, with take-home exercise datasets.', meta: '86 attendees' },
+    { id: 'isro', when: 'past', cat: 'Seminar', month: 'FEB', day: '20', year: '2026', title: 'Designing Interplanetary Missions', desc: 'Guest lecture by an ISRO mission design scientist on trajectory planning.', meta: '210 attendees' },
+    { id: 'uav', when: 'past', cat: 'Competition', month: 'JAN', day: '30', year: '2026', title: 'UAV Delivery: Rapid Prototyping Sprint', desc: 'Six-hour team sprint to design and pitch a campus drone-delivery concept.', meta: '14 teams' },
+    { id: 'pcb', when: 'past', cat: 'Workshop', month: 'NOV', day: '08', year: '2025', title: 'PCB Design for Flight Controllers', desc: 'KiCad from schematic to fab-ready board, using our SIG flight controller.', meta: '52 attendees' },
+    { id: 'chapterday', when: 'past', cat: 'Social', month: 'OCT', day: '03', year: '2025', title: 'Chapter Day & Project Showcase', desc: 'Annual showcase of member projects, demos, and the year in review.', meta: '150+ visitors' },
+    { id: 'aerohack25', when: 'past', cat: 'Flagship', month: 'SEP', day: '19', year: '2025', title: "AeroHack '25", desc: 'Second edition of our flagship hackathon — 220 participants across 42 teams.', meta: '220 participants' },
+  ]; }
+
+  ANNOUNCEMENTS = [
+    { tag: 'Results', date: 'July 2, 2026', title: 'Core team recruitment — Round 2 results', body: 'Shortlisted candidates for design, technical, and outreach roles have been emailed. Onboarding call this Saturday.' },
+    { tag: 'Recruitment', date: 'June 28, 2026', title: "Call for volunteers: AeroHack '26 organizing committee", body: 'We need 20 volunteers across logistics, sponsorships, and judging ops. Open to all years; form closes July 15.' },
+    { tag: 'Opportunities', date: 'June 20, 2026', title: 'IEEE membership drive — discounted student rates', body: 'Join IEEE + AESS at the reduced student rate until August 15. Includes IEEE Xplore access and eligibility for travel grants.' },
+    { tag: 'General', date: 'June 10, 2026', title: 'Summer reading: AESS Systems Magazine picks', body: "Five accessible papers on radar, GNSS spoofing, and UAS traffic management, curated by our editorial team." },
+    { tag: 'Results', date: 'May 28, 2026', title: 'CanSat internal qualifiers — winners announced', body: 'Team Perigee takes first place and will represent MUJ at the national round in October.' },
+    { tag: 'General', date: 'May 12, 2026', title: 'Semester wrap-up and chapter report published', body: 'Our even-semester report — 11 events, 3 new SIGs, and 38 new members — is now on the noticeboard.' },
+  ];
+
+  defaultTeam() {
+    return {
+      advisor: { name: 'Dr. Dinesh Yadav', dept: 'Branch Advisor · IEEE AESS MUJ', email: 'advisor.aess@muj.manipal.edu' },
+      execs: [
+        { id: 'x1', name: 'Prateek Singh', role: 'Chairperson', sub: '' },
+        { id: 'x2', name: 'Harshal Vohra', role: 'Vice-Chairperson', sub: '' },
+        { id: 'x3', name: 'Gowri Nair', role: 'General Secretary', sub: '' },
+        { id: 'x4', name: 'Jaskeerat Singh', role: 'Joint General Secretary', sub: '' },
+        { id: 'x5', name: 'Shreya Aigal', role: 'Treasurer', sub: '' },
+        { id: 'x6', name: 'Ansh Singh', role: 'Editor-in-Chief', sub: '' },
+        { id: 'x7', name: 'Harshit Choudhary', role: 'Chief of Operations', sub: '' },
+      ],
+      depts: [
+        { id: 'd1', name: 'Events', members: [
+          { id: 'd1m1', name: 'Krish Barnwal', role: 'Head' },
+          { id: 'd1m2', name: 'Ishita Gupta', role: 'Joint Head' },
+          { id: 'd1m3', name: 'Aakarsh Gupta', role: 'Senior Coordinator' },
+          { id: 'd1m4', name: 'Abhishek Kumar Singh', role: 'Senior Coordinator' },
+        ] },
+        { id: 'd2', name: 'Operations', members: [
+          { id: 'd2m1', name: 'Tanmay Tripathi', role: 'Head' },
+          { id: 'd2m2', name: 'Anugya Sharma', role: 'Joint Head' },
+          { id: 'd2m3', name: 'Divyansh Kumar', role: 'Senior Coordinator' },
+          { id: 'd2m4', name: 'M Vivek Babu', role: 'Senior Coordinator' },
+        ] },
+        { id: 'd3', name: 'Logistics', members: [
+          { id: 'd3m1', name: 'Durgesh Sharma', role: 'Head' },
+          { id: 'd3m2', name: 'Armaan Singh Sanserwal', role: 'Joint Head' },
+          { id: 'd3m3', name: 'Arya Paida', role: 'Joint Head' },
+          { id: 'd3m4', name: 'Tansukh Goyal', role: 'Senior Coordinator' },
+          { id: 'd3m5', name: 'Eshaan Sharma', role: 'Senior Coordinator' },
+          { id: 'd3m6', name: 'Shashwat Arya', role: 'Senior Coordinator' },
+        ] },
+        { id: 'd4', name: 'Content & Editorial', members: [
+          { id: 'd4m1', name: 'Saisha Arora', role: 'Head' },
+          { id: 'd4m2', name: 'Satwik Bohidar', role: 'Joint Head' },
+        ] },
+        { id: 'd5', name: 'Graphic Design', members: [
+          { id: 'd5m1', name: 'Divyanshi Kumar', role: 'Head' },
+          { id: 'd5m2', name: 'Suryanshi Verma', role: 'Joint Head' },
+        ] },
+        { id: 'd6', name: 'Promotion', members: [
+          { id: 'd6m1', name: 'Ruhan Taneja', role: 'Head' },
+          { id: 'd6m2', name: 'Sidharth Raj', role: 'Joint Head' },
+        ] },
+        { id: 'd7', name: 'Media', members: [
+          { id: 'd7m1', name: 'Anusha Bhalla', role: 'Head' },
+          { id: 'd7m2', name: 'Viyomini Mathur', role: 'Joint Head' },
+        ] },
+        { id: 'd8', name: 'Technical', members: [
+          { id: 'd8m1', name: 'Pranav Chauhan', role: 'Head' },
+          { id: 'd8m2', name: 'Rishabh Chaudhary', role: 'Joint Head' },
+        ] },
+      ],
+    };
+  }
+
+  loadStored(key) {
+    try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : null; } catch (e) { return null; }
+  }
+
+  persistTeam(team) {
+    this.setState({ team });
+    try { localStorage.setItem('aess-muj-team-v2', JSON.stringify(team)); } catch (e) {}
+  }
+
+  persistEvents(events) {
+    this.setState({ events });
+    try { localStorage.setItem('aess-muj-events', JSON.stringify(events)); } catch (e) {}
+  }
+
+  updateAdvisor(field, val) {
+    const t = this.state.team;
+    this.persistTeam({ ...t, advisor: { ...t.advisor, [field]: val } });
+  }
+
+  updateMember(group, i, field, val) {
+    const t = this.state.team;
+    this.persistTeam({ ...t, [group]: t[group].map((m, j) => (j === i ? { ...m, [field]: val } : m)) });
+  }
+
+  addMember(group) {
+    const t = this.state.team;
+    this.persistTeam({ ...t, [group]: [...t[group], { id: 'm' + Date.now(), name: '', role: '', sub: '' }] });
+  }
+
+  removeMember(group, i) {
+    const t = this.state.team;
+    this.persistTeam({ ...t, [group]: t[group].filter((m, j) => j !== i) });
+  }
+
+  addDept() {
+    const t = this.state.team;
+    this.persistTeam({ ...t, depts: [...t.depts, { id: 'd' + Date.now(), name: 'New Department', members: [] }] });
+  }
+
+  removeDept(i) {
+    const t = this.state.team;
+    this.persistTeam({ ...t, depts: t.depts.filter((d, j) => j !== i) });
+  }
+
+  updateDeptName(i, val) {
+    const t = this.state.team;
+    this.persistTeam({ ...t, depts: t.depts.map((d, j) => (j === i ? { ...d, name: val } : d)) });
+  }
+
+  addDeptMember(i) {
+    const t = this.state.team;
+    this.persistTeam({ ...t, depts: t.depts.map((d, j) => (j === i ? { ...d, members: [...d.members, { id: 'dm' + Date.now(), name: '', role: 'Coordinator' }] } : d)) });
+  }
+
+  updateDeptMember(i, k, field, val) {
+    const t = this.state.team;
+    this.persistTeam({ ...t, depts: t.depts.map((d, j) => (j === i ? { ...d, members: d.members.map((m, l) => (l === k ? { ...m, [field]: val } : m)) } : d)) });
+  }
+
+  removeDeptMember(i, k) {
+    const t = this.state.team;
+    this.persistTeam({ ...t, depts: t.depts.map((d, j) => (j === i ? { ...d, members: d.members.filter((m, l) => l !== k) } : d)) });
+  }
+
+  updateEvent(i, field, val) {
+    this.persistEvents(this.state.events.map((e, j) => (j === i ? { ...e, [field]: val } : e)));
+  }
+
+  addNewEvent() {
+    this.persistEvents([{ id: 'ev' + Date.now(), when: 'upcoming', cat: 'Workshop', month: 'SEP', day: '01', year: '2026', title: '', desc: '', meta: '' }, ...this.state.events]);
+  }
+
+  removeEvent(i) {
+    this.persistEvents(this.state.events.filter((e, j) => j !== i));
+  }
+
+  initialsOf(name) {
+    const parts = (name || '').trim().split(/\s+/).filter(Boolean);
+    return parts.length ? parts.map((w) => w[0]).slice(0, 2).join('').toUpperCase() : '+';
+  }
+
+  nav(page) {
+    this.setState({ page });
+    window.scrollTo(0, 0);
+  }
+
+  chipStyle(active) {
+    return active
+      ? { bg: '#00629B', fg: '#FFFFFF', border: '#00629B' }
+      : { bg: '#FFFFFF', fg: '#41525D', border: '#D9E2E8' };
+  }
+
+  renderVals() {
+    const s = this.state;
+    const pages = ['home', 'about', 'events', 'team', 'announcements'];
+    const labels = { home: 'Home', about: 'About', events: 'Events', team: 'Team', announcements: 'Announcements' };
+
+    const navItems = pages.map((p) => ({
+      label: labels[p],
+      onClick: () => this.nav(p),
+      color: s.page === p ? '#00629B' : '#41525D',
+      bar: s.page === p ? '#00629B' : 'transparent',
+      weight: s.page === p ? 700 : 600,
+    }));
+
+    const footerNav = pages.map((p) => ({ label: labels[p], onClick: () => this.nav(p) }));
+
+    // Events filtering
+    const inTab = s.events.filter((e) => e.when === s.tab);
+    const filtered = inTab.filter((e) => s.cat === 'All' || e.cat === s.cat);
+    const visibleEvents = filtered.map((e) => {
+      const cs = this.CAT_STYLES[e.cat];
+      const reg = !!s.registered[e.id];
+      return {
+        ...e,
+        catFg: cs.fg, catBg: cs.bg,
+        isUpcoming: e.when === 'upcoming',
+        onReg: () => this.setState((st) => ({ registered: { ...st.registered, [e.id]: !st.registered[e.id] } })),
+        regLabel: reg ? '✓ Registered' : 'Register',
+        regBg: reg ? '#E9F6EE' : '#00629B',
+        regFg: reg ? '#1E7A3C' : '#FFFFFF',
+        regBorder: reg ? '#BFE3CC' : '#00629B',
+      };
+    });
+
+    const categoryChips = ['All', 'Workshop', 'Seminar', 'Competition', 'Social', 'Flagship'].map((c) => ({
+      label: c,
+      onClick: () => this.setState({ cat: c }),
+      ...this.chipStyle(s.cat === c),
+    }));
+
+    const upcoming = s.tab === 'upcoming';
+    const flagReg = !!s.registered['aerohack26'];
+
+    // Home preview: 3 soonest upcoming
+    const homeEvents = s.events.filter((e) => e.when === 'upcoming').slice(0, 3).map((e) => ({
+      ...e, catFg: this.CAT_STYLES[e.cat].fg, catBg: this.CAT_STYLES[e.cat].bg,
+      venue: e.meta.split('·').slice(1).join('·').trim() || e.meta,
+    }));
+
+    // Announcements
+    const visibleAnnouncements = this.ANNOUNCEMENTS
+      .filter((a) => s.tag === 'All' || a.tag === s.tag)
+      .map((a) => ({ ...a, tagFg: this.TAG_STYLES[a.tag].fg, tagBg: this.TAG_STYLES[a.tag].bg }));
+
+    const tagChips = ['All', 'General', 'Recruitment', 'Results', 'Opportunities'].map((t) => ({
+      label: t,
+      onClick: () => this.setState({ tag: t }),
+      ...this.chipStyle(s.tag === t),
+    }));
+
+    // team + edit rows
+    const execs = s.team.execs.map((m) => ({ ...m, initials: this.initialsOf(m.name), slotId: 'team-photo-' + m.id }));
+    const deptCards = s.team.depts.map((d) => ({ name: d.name, members: d.members }));
+    const memberRow = (group) => (m, i) => ({
+      name: m.name, role: m.role, sub: m.sub,
+      onName: (e) => this.updateMember(group, i, 'name', e.target.value),
+      onRole: (e) => this.updateMember(group, i, 'role', e.target.value),
+      onSub: (e) => this.updateMember(group, i, 'sub', e.target.value),
+      onRemove: () => this.removeMember(group, i),
+    });
+    const execEditRows = s.team.execs.map(memberRow('execs'));
+    const deptEditRows = s.team.depts.map((d, i) => ({
+      name: d.name,
+      onName: (e) => this.updateDeptName(i, e.target.value),
+      onRemove: () => this.removeDept(i),
+      addMember: () => this.addDeptMember(i),
+      memberRows: d.members.map((m, k) => ({
+        name: m.name, role: m.role,
+        onName: (e) => this.updateDeptMember(i, k, 'name', e.target.value),
+        onRole: (e) => this.updateDeptMember(i, k, 'role', e.target.value),
+        onRemove: () => this.removeDeptMember(i, k),
+      })),
+    }));
+    const eventEditRows = s.events.map((e, i) => ({
+      when: e.when, cat: e.cat, month: e.month, day: e.day, year: e.year, title: e.title, meta: e.meta, desc: e.desc,
+      onWhen: (ev) => this.updateEvent(i, 'when', ev.target.value),
+      onCat: (ev) => this.updateEvent(i, 'cat', ev.target.value),
+      onMonth: (ev) => this.updateEvent(i, 'month', ev.target.value.toUpperCase().slice(0, 3)),
+      onDay: (ev) => this.updateEvent(i, 'day', ev.target.value.slice(0, 2)),
+      onYear: (ev) => this.updateEvent(i, 'year', ev.target.value.slice(0, 4)),
+      onTitle: (ev) => this.updateEvent(i, 'title', ev.target.value),
+      onMeta: (ev) => this.updateEvent(i, 'meta', ev.target.value),
+      onDesc: (ev) => this.updateEvent(i, 'desc', ev.target.value),
+      onRemove: () => this.removeEvent(i),
+    }));
+
+    return {
+      // page switching
+      isHome: s.page === 'home',
+      isAbout: s.page === 'about',
+      isEvents: s.page === 'events',
+      isTeam: s.page === 'team',
+      isAnnouncements: s.page === 'announcements',
+      goHome: () => this.nav('home'),
+      goAbout: () => this.nav('about'),
+      goEvents: () => this.nav('events'),
+      goTeam: () => this.nav('team'),
+      goAnnouncements: () => this.nav('announcements'),
+      navItems, footerNav,
+
+      // hero
+      radarSweep: React.createElement('div', {
+        style: {
+          position: 'absolute', inset: 0, borderRadius: '50%',
+          background: 'conic-gradient(from 0deg, rgba(102,178,226,0.30), rgba(102,178,226,0) 75deg)',
+          animation: 'aessSweep 7s linear infinite',
+        },
+      }),
+      showStats: this.props.showStats ?? true,
+      stats: [
+        { value: '120+', label: 'Active members' },
+        { value: '24', label: 'Events hosted' },
+        { value: '6', label: 'Special interest groups' },
+        { value: '2023', label: 'Chapter chartered' },
+      ],
+      focusAreas: [
+        { glyph: '◎', title: 'Radar & Navigation', desc: 'Signal processing, GNSS, and sensing — from theory sessions to live SDR captures.' },
+        { glyph: '✈', title: 'Avionics & Autonomous Systems', desc: 'Flight controllers, UAS autonomy, and the software standards behind certified systems.' },
+        { glyph: '◍', title: 'Space Systems', desc: 'CanSat builds, ground stations, and mission design for small satellites.' },
+      ],
+      homeEvents,
+      latestAnnouncement: "AeroHack '26 registrations are now open — early-bird closes July 31.",
+
+      // about
+      activities: [
+        { title: 'Hands-on workshops', desc: 'SDR, MATLAB, PCB design, and embedded flight software, run by student leads.' },
+        { title: 'Speaker sessions', desc: 'Engineers and researchers from ISRO, industry, and academia, every semester.' },
+        { title: 'Competitions', desc: "CanSat qualifiers, design sprints, and our flagship AeroHack hackathon." },
+        { title: 'Special interest groups', desc: 'Year-long member teams building radar, UAV, and ground-station projects.' },
+      ],
+      fields: ['Radar Systems', 'Navigation & GNSS', 'Avionics', 'Unmanned Aerial Systems', 'Space Systems', 'Electronic Warfare', 'Signal Processing', 'Systems Engineering'],
+      milestones: [
+        { year: '2023', text: 'Chapter chartered under the IEEE MUJ Student Branch.' },
+        { year: '2024', text: 'First AeroHack — 140 participants across 28 teams.' },
+        { year: '2025', text: 'Three SIG teams reach national competition finals.' },
+        { year: '2026', text: '120+ members, 6 SIGs, and 24 events hosted to date.' },
+      ],
+      joinSteps: [
+        { n: '1', title: 'Join IEEE', desc: 'Sign up at ieee.org at the discounted student member rate.' },
+        { n: '2', title: 'Add AESS', desc: 'Add the Aerospace & Electronic Systems Society to your membership.' },
+        { n: '3', title: 'Register with us', desc: 'Fill the chapter form with your IEEE number — you’ll be onboarded within a week.' },
+      ],
+
+      // events
+      showUpcoming: () => this.setState({ tab: 'upcoming' }),
+      showPast: () => this.setState({ tab: 'past' }),
+      upcomingTabBg: upcoming ? '#FFFFFF' : 'transparent',
+      upcomingTabFg: upcoming ? '#041C2C' : '#5B6B76',
+      upcomingTabShadow: upcoming ? '0 1px 4px rgba(4,28,44,0.15)' : 'none',
+      pastTabBg: !upcoming ? '#FFFFFF' : 'transparent',
+      pastTabFg: !upcoming ? '#041C2C' : '#5B6B76',
+      pastTabShadow: !upcoming ? '0 1px 4px rgba(4,28,44,0.15)' : 'none',
+      categoryChips,
+      showFlagshipBanner: upcoming && (s.cat === 'All' || s.cat === 'Flagship'),
+      regFlagship: () => this.setState((st) => ({ registered: { ...st.registered, aerohack26: !st.registered.aerohack26 } })),
+      flagshipRegLabel: flagReg ? '✓ Team registered' : 'Register your team',
+      flagshipRegBg: flagReg ? '#E9F6EE' : '#FFC845',
+      flagshipRegFg: flagReg ? '#1E7A3C' : '#041C2C',
+      visibleEvents,
+      noEvents: visibleEvents.length === 0 && !(upcoming && (s.cat === 'All' || s.cat === 'Flagship')),
+      editingEvents: s.editEvents,
+      toggleEditEvents: () => this.setState({ editEvents: !s.editEvents }),
+      editEventsLabel: s.editEvents ? 'Done editing' : '✎ Edit events',
+      editEventsBg: s.editEvents ? '#00629B' : '#FFFFFF',
+      editEventsFg: s.editEvents ? '#FFFFFF' : '#00629B',
+      editEventsBorder: '#00629B',
+      eventEditRows,
+      addEvent: () => this.addNewEvent(),
+      resetEvents: () => this.persistEvents(this.defaultEvents()),
+
+      // team
+      execs, execEditRows, deptCards, deptEditRows,
+      editingTeam: s.editTeam,
+      toggleEditTeam: () => this.setState({ editTeam: !s.editTeam }),
+      editTeamLabel: s.editTeam ? 'Done editing' : '✎ Edit team',
+      editTeamBg: s.editTeam ? '#00629B' : '#FFFFFF',
+      editTeamFg: s.editTeam ? '#FFFFFF' : '#00629B',
+      editTeamBorder: '#00629B',
+      advisorName: s.team.advisor.name,
+      advisorDept: s.team.advisor.dept,
+      advisorEmail: s.team.advisor.email,
+      onAdvisorName: (e) => this.updateAdvisor('name', e.target.value),
+      onAdvisorDept: (e) => this.updateAdvisor('dept', e.target.value),
+      onAdvisorEmail: (e) => this.updateAdvisor('email', e.target.value),
+      addExec: () => this.addMember('execs'),
+      addDept: () => this.addDept(),
+      resetTeam: () => this.persistTeam(this.defaultTeam()),
+
+      // announcements
+      tagChips,
+      visibleAnnouncements,
+      email: s.email,
+      onEmailChange: (e) => this.setState({ email: e.target.value, emailError: false }),
+      subscribe: () => {
+        if (s.email.includes('@') && s.email.includes('.')) this.setState({ subscribed: true, emailError: false });
+        else this.setState({ emailError: true });
+      },
+      subscribed: s.subscribed,
+      notSubscribed: !s.subscribed,
+      emailError: s.emailError,
+    };
+  }
+}
+</script>
+</body>
+</html>
