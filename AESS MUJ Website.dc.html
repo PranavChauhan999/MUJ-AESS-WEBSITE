@@ -341,7 +341,7 @@
     <!-- Advisor -->
     <div data-m="stack" style="border: 1px solid #D9E2E8; border-radius: 10px; padding: 32px; display: flex; gap: 32px; align-items: center; margin-bottom: 56px; background: #F4F8FB;">
       <div style="width: 180px; height: 210px; flex: none;">
-        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="advisor-photo" shape="rounded" placeholder="Drop advisor photo" hint-size="180px,210px" style="width: 180px; height: 210px; display: block;"></x-import>
+        <img src="assets/team/advisor.webp" alt="Dr. Dinesh Yadav" style="width: 180px; height: 210px; display: block; object-fit: cover; border-radius: 8px;" />
       </div>
       <div>
         <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #00629B; margin-bottom: 10px;">Faculty advisor</div>
@@ -358,7 +358,7 @@
       <sc-for list="{{ execs }}" as="p" hint-placeholder-count="7">
         <div style="border: 1px solid #D9E2E8; border-radius: 8px; padding: 26px 22px; text-align: center;" style-hover="border-color: #00629B; box-shadow: 0 8px 24px rgba(4,28,44,0.08);">
           <div style="width: 110px; height: 110px; margin: 0 auto 14px;">
-            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ p.slotId }}" shape="circle" placeholder="{{ p.initials }}" hint-size="110px,110px" style="width: 110px; height: 110px; display: block;"></x-import>
+            <img src="{{ p.photo }}" alt="{{ p.name }}" style="width: 110px; height: 110px; display: block; object-fit: cover; border-radius: 999px;" />
           </div>
           <div style="font-size: 16px; font-weight: 700; color: #041C2C;">{{ p.name }}</div>
           <div style="font-size: 13px; font-weight: 700; color: #00629B; margin: 4px 0 6px;">{{ p.role }}</div>
@@ -758,7 +758,7 @@ class Component extends DCLogic {
     }));
 
     // team + edit rows
-    const execs = s.team.execs.map((m) => ({ ...m, initials: this.initialsOf(m.name), slotId: 'team-photo-' + m.id }));
+    const execs = s.team.execs.map((m) => ({ ...m, initials: this.initialsOf(m.name), photo: 'assets/team/' + m.id + '.webp' }));
     const deptCards = s.team.depts.map((d) => ({ name: d.name, members: d.members }));
     const memberRow = (group) => (m, i) => ({
       name: m.name, role: m.role, sub: m.sub,
