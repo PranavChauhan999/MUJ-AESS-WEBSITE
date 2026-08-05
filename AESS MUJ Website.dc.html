@@ -267,47 +267,7 @@
           <button onClick="{{ chip.onClick }}" style="border: 1px solid {{ chip.border }}; background: {{ chip.bg }}; color: {{ chip.fg }}; border-radius: 999px; padding: 8px 16px; font-size: 13px; font-weight: 700; cursor: pointer;">{{ chip.label }}</button>
         </sc-for>
       </div>
-      <button onClick="{{ toggleEditEvents }}" style="margin-left: auto; background: {{ editEventsBg }}; color: {{ editEventsFg }}; border: 1px solid {{ editEventsBorder }}; border-radius: 4px; padding: 9px 18px; font-size: 13px; font-weight: 700; cursor: pointer;">{{ editEventsLabel }}</button>
     </div>
-
-    <sc-if value="{{ editingEvents }}" hint-placeholder-val="{{ false }}">
-      <div style="border: 1px solid #B7D3E6; background: #F4F8FB; border-radius: 10px; padding: 26px; margin-bottom: 32px;">
-        <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px; flex-wrap: wrap;">
-          <div style="font-size: 17px; font-weight: 800; color: #041C2C;">Edit events</div>
-          <div style="font-size: 13px; color: #5B6B76;">All events across both tabs. Changes save in this browser as you type.</div>
-          <button onClick="{{ addEvent }}" style="margin-left: auto; background: #FFFFFF; border: 1px solid #00629B; color: #00629B; border-radius: 4px; padding: 5px 12px; font-size: 12px; font-weight: 700; cursor: pointer;" style-hover="background: #E8F1F8;">+ Add event</button>
-          <button onClick="{{ resetEvents }}" style="background: none; border: none; padding: 0; color: #B23A48; font-size: 13px; font-weight: 700; cursor: pointer;">Reset to defaults</button>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          <sc-for list="{{ eventEditRows }}" as="r" hint-placeholder-count="4">
-            <div style="background: #FFFFFF; border: 1px solid #D9E2E8; border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 8px;">
-              <div data-m="cols" style="display: grid; grid-template-columns: 112px 128px 58px 48px 62px 1fr 36px; gap: 8px; align-items: stretch;">
-                <select value="{{ r.when }}" onChange="{{ r.onWhen }}" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px 6px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;">
-                  <option value="upcoming">Upcoming</option>
-                  <option value="past">Past</option>
-                </select>
-                <select value="{{ r.cat }}" onChange="{{ r.onCat }}" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px 6px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;">
-                  <option value="Workshop">Workshop</option>
-                  <option value="Seminar">Seminar</option>
-                  <option value="Competition">Competition</option>
-                  <option value="Social">Social</option>
-                  <option value="Flagship">Flagship</option>
-                </select>
-                <input value="{{ r.month }}" onChange="{{ r.onMonth }}" placeholder="MON" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none; min-width: 0;" style-focus="border-color: #00629B;" />
-                <input value="{{ r.day }}" onChange="{{ r.onDay }}" placeholder="DD" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none; min-width: 0;" style-focus="border-color: #00629B;" />
-                <input value="{{ r.year }}" onChange="{{ r.onYear }}" placeholder="YYYY" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none; min-width: 0;" style-focus="border-color: #00629B;" />
-                <input value="{{ r.title }}" onChange="{{ r.onTitle }}" placeholder="Event title" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px 11px; font-size: 13px; font-weight: 600; background: #FFFFFF; color: #1A2A33; outline: none; min-width: 0;" style-focus="border-color: #00629B;" />
-                <button onClick="{{ r.onRemove }}" title="Remove event" style="background: #FFFFFF; border: 1px solid #D9E2E8; border-radius: 4px; color: #B23A48; font-size: 14px; font-weight: 700; cursor: pointer;" style-hover="border-color: #B23A48;">✕</button>
-              </div>
-              <div data-m="cols" style="display: grid; grid-template-columns: 1fr 1.7fr; gap: 8px;">
-                <input value="{{ r.meta }}" onChange="{{ r.onMeta }}" placeholder="Time · Venue · Capacity" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none; min-width: 0;" style-focus="border-color: #00629B;" />
-                <input value="{{ r.desc }}" onChange="{{ r.onDesc }}" placeholder="One-line description" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none; min-width: 0;" style-focus="border-color: #00629B;" />
-              </div>
-            </div>
-          </sc-for>
-        </div>
-      </div>
-    </sc-if>
 
     <!-- Flagship banner -->
     <sc-if value="{{ showFlagshipBanner }}" hint-placeholder-val="{{ false }}">
@@ -377,62 +337,6 @@
   </div>
 
   <div data-m="pad" style="max-width: 1140px; margin: 0 auto; padding: 32px 24px 80px;">
-
-    <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
-      <button onClick="{{ toggleEditTeam }}" style="background: {{ editTeamBg }}; color: {{ editTeamFg }}; border: 1px solid {{ editTeamBorder }}; border-radius: 4px; padding: 9px 18px; font-size: 13px; font-weight: 700; cursor: pointer;">{{ editTeamLabel }}</button>
-    </div>
-
-    <sc-if value="{{ editingTeam }}" hint-placeholder-val="{{ false }}">
-      <div style="border: 1px solid #B7D3E6; background: #F4F8FB; border-radius: 10px; padding: 26px; margin-bottom: 36px;">
-        <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
-          <div style="font-size: 17px; font-weight: 800; color: #041C2C;">Edit team</div>
-          <div style="font-size: 13px; color: #5B6B76;">Changes save in this browser as you type. Drag photos onto the cards below.</div>
-          <button onClick="{{ resetTeam }}" style="margin-left: auto; background: none; border: none; padding: 0; color: #B23A48; font-size: 13px; font-weight: 700; cursor: pointer;">Reset to defaults</button>
-        </div>
-        <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #00629B; margin-bottom: 10px;">Faculty advisor</div>
-        <div data-m="cols" style="display: grid; grid-template-columns: 1fr 1.6fr 1.2fr; gap: 10px; margin-bottom: 26px;">
-          <input value="{{ advisorName }}" onChange="{{ onAdvisorName }}" placeholder="Name" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 9px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
-          <input value="{{ advisorDept }}" onChange="{{ onAdvisorDept }}" placeholder="Department" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 9px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
-          <input value="{{ advisorEmail }}" onChange="{{ onAdvisorEmail }}" placeholder="Email" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 9px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
-        </div>
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
-          <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #00629B;">Executive committee</div>
-          <button onClick="{{ addExec }}" style="background: #FFFFFF; border: 1px solid #00629B; color: #00629B; border-radius: 4px; padding: 5px 12px; font-size: 12px; font-weight: 700; cursor: pointer;" style-hover="background: #E8F1F8;">+ Add member</button>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 26px;">
-          <sc-for list="{{ execEditRows }}" as="r" hint-placeholder-count="4">
-            <div data-m="cols" style="display: grid; grid-template-columns: 1.3fr 1.1fr 1.1fr 36px; gap: 10px; align-items: stretch;">
-              <input value="{{ r.name }}" onChange="{{ r.onName }}" placeholder="Full name" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 9px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
-              <input value="{{ r.role }}" onChange="{{ r.onRole }}" placeholder="Role" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 9px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
-              <input value="{{ r.sub }}" onChange="{{ r.onSub }}" placeholder="Branch · Year" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 9px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
-              <button onClick="{{ r.onRemove }}" title="Remove member" style="background: #FFFFFF; border: 1px solid #D9E2E8; border-radius: 4px; color: #B23A48; font-size: 14px; font-weight: 700; cursor: pointer;" style-hover="border-color: #B23A48;">✕</button>
-            </div>
-          </sc-for>
-        </div>
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
-          <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #00629B;">Core team departments</div>
-          <button onClick="{{ addDept }}" style="background: #FFFFFF; border: 1px solid #00629B; color: #00629B; border-radius: 4px; padding: 5px 12px; font-size: 12px; font-weight: 700; cursor: pointer;" style-hover="background: #E8F1F8;">+ Add department</button>
-        </div>
-        <div data-m="cols" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; align-items: start;">
-          <sc-for list="{{ deptEditRows }}" as="d" hint-placeholder-count="4">
-            <div style="background: #FFFFFF; border: 1px solid #D9E2E8; border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 8px;">
-              <div style="display: grid; grid-template-columns: 1fr 36px; gap: 8px; align-items: stretch;">
-                <input value="{{ d.name }}" onChange="{{ d.onName }}" placeholder="Department name" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 9px 11px; font-size: 13px; font-weight: 700; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
-                <button onClick="{{ d.onRemove }}" title="Remove department" style="background: #FFFFFF; border: 1px solid #D9E2E8; border-radius: 4px; color: #B23A48; font-size: 14px; font-weight: 700; cursor: pointer;" style-hover="border-color: #B23A48;">✕</button>
-              </div>
-              <sc-for list="{{ d.memberRows }}" as="mr" hint-placeholder-count="2">
-                <div style="display: grid; grid-template-columns: 1.2fr 1fr 36px; gap: 8px; align-items: stretch;">
-                  <input value="{{ mr.name }}" onChange="{{ mr.onName }}" placeholder="Full name" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
-                  <input value="{{ mr.role }}" onChange="{{ mr.onRole }}" placeholder="Role" style="border: 1px solid #C6D3DB; border-radius: 4px; padding: 8px 11px; font-size: 13px; background: #FFFFFF; color: #1A2A33; outline: none;" style-focus="border-color: #00629B;" />
-                  <button onClick="{{ mr.onRemove }}" title="Remove member" style="background: #FFFFFF; border: 1px solid #D9E2E8; border-radius: 4px; color: #B23A48; font-size: 14px; font-weight: 700; cursor: pointer;" style-hover="border-color: #B23A48;">✕</button>
-                </div>
-              </sc-for>
-              <button onClick="{{ d.addMember }}" style="align-self: flex-start; background: #FFFFFF; border: 1px solid #00629B; color: #00629B; border-radius: 4px; padding: 5px 12px; font-size: 12px; font-weight: 700; cursor: pointer;" style-hover="background: #E8F1F8;">+ Add member</button>
-            </div>
-          </sc-for>
-        </div>
-      </div>
-    </sc-if>
 
     <!-- Advisor -->
     <div data-m="stack" style="border: 1px solid #D9E2E8; border-radius: 10px; padding: 32px; display: flex; gap: 32px; align-items: center; margin-bottom: 56px; background: #F4F8FB;">
@@ -606,8 +510,8 @@ class Component extends DCLogic {
     editTeam: false,
     editEvents: false,
     menuOpen: false,
-    team: (() => { const t = this.loadStored('aess-muj-team-v2'); return (t && t.advisor && t.execs && t.depts) ? t : this.defaultTeam(); })(),
-    events: this.loadStored('aess-muj-events-v2') ?? this.defaultEvents(),
+    team: this.defaultTeam(),
+    events: this.defaultEvents(),
   };
 
   CAT_STYLES = {
@@ -627,9 +531,7 @@ class Component extends DCLogic {
 
   defaultEvents() { return [
     { id: 'sdr', when: 'upcoming', cat: 'Workshop', month: 'JUL', day: '24', year: '2026', title: 'Hands-on SDR: Spectrum Sensing Basics', desc: 'Build a live FM and ADS-B receiver with RTL-SDR dongles. Kits provided; bring a laptop.', meta: '2:00–5:00 PM · AB1 Lab 204 · 40 seats' },
-    { id: 'avionics', when: 'upcoming', cat: 'Seminar', month: 'AUG', day: '05', year: '2026', title: 'Careers in Avionics & Flight Systems', desc: 'Guest talk by a senior avionics engineer on certification, DO-178C, and industry pathways.', meta: '4:00 PM · Auditorium 2' },
     { id: 'cansat', when: 'upcoming', cat: 'Competition', month: 'AUG', day: '12', year: '2026', title: 'CanSat Challenge — Kickoff & Team Briefing', desc: 'Rules walkthrough for the intra-college can-sized satellite design challenge.', meta: '5:30 PM · AB2 Seminar Hall' },
-    { id: 'freshers', when: 'upcoming', cat: 'Social', month: 'AUG', day: '28', year: '2026', title: "Freshers' Orientation & Chapter Mixer", desc: 'Meet the team, explore our special interest groups, and learn how to get involved.', meta: '6:00 PM · Student Plaza' },
     { id: 'milestone26', when: 'past', cat: 'Seminar', month: 'APR', day: '02', year: '2026', title: 'A Memorable Milestone — Executive Visit & Chapter Inauguration', desc: 'Distinguished interaction with Dr. Dinesh Yadav on "How to Configure, Design, Assemble, Test, Launch, and Operate a Satellite", and the official inauguration of the IEEE AESS MUJ Student Branch Chapter.', meta: 'Executive visit & interaction · MUJ', img: 'assets/events/milestone26.jpg' },
     { id: 'techideate26', when: 'past', cat: 'Competition', month: 'JAN', day: '30', year: '2026', title: 'TechIdeate 2026 — Project Expo 4.0', desc: 'Our flagship technical exhibition — student-led prototypes in UAV and electronic systems, pitched directly to industry mentors in a collaborative, hands-on environment.', meta: 'Flagship technical exhibition · MUJ', img: 'assets/events/techideate26.jpg' },
     { id: 'leaders25', when: 'past', cat: 'Seminar', month: 'SEP', day: '12', year: '2025', title: 'Meet Your Leaders: Perspectives from Space and Defence', desc: 'Joint session with IEEE MTT-S SBC featuring Dr. Gautam Chattopadhyay (NASA JPL & MTT-S President), Dr. Chinmoy Saha (IIST), and Dr. Ashutosh Kedar (Scientist G, LRDE, DRDO).', meta: 'Joint session with IEEE MTT-S SBC · MUJ', img: 'assets/events/leaders25.jpg' },
