@@ -275,17 +275,19 @@
       <div data-m="cols" style="background: linear-gradient(120deg, #041C2C 0%, #0B3D5C 100%); border-radius: 10px; overflow: hidden; display: grid; grid-template-columns: 1.15fr 0.85fr; margin-bottom: 32px;">
         <div style="padding: 40px; color: #FFFFFF;">
           <div style="display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; color: #041C2C; background: #FFC845; border-radius: 3px; padding: 5px 10px; margin-bottom: 18px;">FLAGSHIP · REGISTRATION OPEN</div>
-          <h2 style="font-size: 34px; font-weight: 800; margin: 0 0 12px;">AeroHack '26</h2>
-          <p style="font-size: 15px; line-height: 1.65; color: #B8C9D4; margin: 0 0 22px; max-width: 420px;">Our 48-hour aerospace systems hackathon. Build for tracks in UAS autonomy, radar sensing, and satellite ground systems — with mentors from industry.</p>
-          <div style="display: flex; flex-wrap: wrap; gap: 12px 22px; margin-bottom: 26px; font-size: 14px; font-weight: 600; color: #E8F1F8;">
-            <div>Aug 21–23, 2026</div>
-            <div>Dome Building, MUJ</div>
-            <div>Teams of 2–4</div>
+          <h2 style="font-size: 34px; font-weight: 800; margin: 0 0 6px;">PROPEL 2.0</h2>
+          <div style="font-size: 15px; font-weight: 700; color: #FFC845; margin-bottom: 12px;">by Dronum Aviation Pvt. Ltd. — DGCA approved RPTO</div>
+          <p style="font-size: 15px; line-height: 1.65; color: #B8C9D4; margin: 0 0 22px; max-width: 440px;">Hands-on drone workshop under Indian Space Week 2026, with IEEE COSMOS, IEEE MTT-S and IEEE APS. Build and design your own drone, learn from experts, and get a certificate of participation. Followed by Drone Flying Training at MUJ Cricket Ground.</p>
+          <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; font-size: 14px; font-weight: 600; color: #E8F1F8;">
+            <div>17 August 2026 · 9:00 AM onwards</div>
+            <div>Board Room, 2nd Floor, 3AB, MUJ</div>
+            <div>Followed by Drone Flying Training at MUJ Cricket Ground</div>
           </div>
-          <button onClick="{{ regFlagship }}" style="background: {{ flagshipRegBg }}; color: {{ flagshipRegFg }}; border: none; border-radius: 4px; padding: 13px 24px; font-size: 15px; font-weight: 700; cursor: pointer;">{{ flagshipRegLabel }}</button>
+          <div style="font-size: 13px; font-weight: 700; color: #FFC845; margin-bottom: 20px;">No Registration Fee · Limited Seats — pre-registration is important for confirmation.</div>
+          <a href="https://forms.gle/bxRn1wBgTUVvrR3N9" target="_blank" rel="noopener" style="display: inline-block; background: #FFC845; color: #041C2C; border-radius: 4px; padding: 13px 24px; font-size: 15px; font-weight: 700; text-decoration: none;" style-hover="background: #FFD870;">Register Now</a>
         </div>
-        <div style="min-height: 300px;">
-          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="flagship-photo" placeholder="Drop AeroHack photo here" hint-size="100%,300px" style="width: 100%; height: 100%; display: block;"></x-import>
+        <div style="min-height: 300px; background: #E8EAEF;">
+          <img src="assets/events/propel26.png" alt="PROPEL 2.0 workshop poster" style="width: 100%; height: 100%; display: block; object-fit: cover; object-position: top center;" />
         </div>
       </div>
     </sc-if>
